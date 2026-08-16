@@ -1,0 +1,2 @@
+update_cmdline="niri msg windows | grep -e '^ *App ID: \".*\"$' | cut -d \\\" -f 2"
+update_interval_ms=1000

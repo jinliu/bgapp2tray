@@ -1,0 +1,3 @@
+update_interval_ms = 5000
+grace_period_ms = 15000
+tray_icon_status = 1 # 1: ActiveStatus, 0: PassiveStatus

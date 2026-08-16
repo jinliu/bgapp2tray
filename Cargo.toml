@@ -17,21 +17,32 @@ codegen-units = 1
 
 [[bin]]
 name = "bgapp2tray"
-path = "src/tray/main.rs"
+path = "src/bgapp2tray/bgapp2tray.rs"
+
+[[bin]]
+name = "bgapp2tray-helper"
+path = "src/bgapp2tray-helper/helper.rs"
 
 [[bin]]
 name = "xdg-desktop-portal-bgapp"
-path = "src/portal/main.rs"
+path = "src/portal/portal.rs"
 
 [dependencies]
-libayatana-appindicator = "0.2.0"
-gtk = "0.15.0"
-zbus = { version = "5.19.0", features = ["tokio"] }
-tokio = {version = "1.53.0", features = ["full"]}
+confique = { version = "0.4.0", features = ["toml"] }
+env_logger = "0.11.11"
+freedesktop-desktop-entry = "0.8.1"
 futures-util = "0.3.34"
-tokio-scoped = "0.2.0"
+json-escape = "0.3.1"
+libappindicator-zbus = "0.2.0"
+log = "0.4.33"
+tokio = {version = "1.53.0", features = ["full"]}
+unicase = "2.9.0"
+wayland-client = "0.31.15"
+wayland-protocols = { version = "0.32.13", features = ["client", "staging"] }
+xdg = "3.0.0"
+zbus = { version = "5.19.0", features = ["tokio"] }
 
 [dev-dependencies.cargo-husky]
 version = "1.5.0"
-default-features = true # Disable features which are enabled by default
+default-features = true
 features = ["precommit-hook", "run-cargo-check", "run-cargo-clippy", "run-cargo-fmt"]
