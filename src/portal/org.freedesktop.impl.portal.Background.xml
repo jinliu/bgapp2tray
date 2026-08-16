@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!--
+ SPDX-License-Identifier: LGPL-2.1-or-later
+ SPDX-FileCopyrightText: Copyright © the xdg-desktop-portal contributors
+-->
+
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <!--
+    org.freedesktop.impl.portal.Background:
+    @short_description: Background portal backend interface
+
+    This interface provides APIs related to applications
+    that are running in the background.
+  -->
+  <interface name="org.freedesktop.impl.portal.Background">
+
+    <!--
+      GetAppState:
+      @apps: an array with information about running apps
+
+      Gets information about running apps. Each entry has
+      an application ID as key. The returned values are of
+      type u and have the following meaning:
+
+      - ``0``: Background (no open window)
+      - ``1``: Running (at least one open window)
+      - ``2``: Active (in the foreground)
+    -->
+    <method name="GetAppState">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+      <arg type="a{sv}" name="apps" direction="out"/>
+    </method>
+
+    <!--
+      NotifyBackground:
+      @handle: Object path for the :ref:`org.freedesktop.impl.portal.Request` object representing this call
+      @app_id: App id of the application
+      @name: A display name for the application
+      @response: Numeric response, not used
+      @results: Vardict with results of the call
+
+      Notifies the user that an application is running in the background.
+
+      The following results get returned via the @results vardict:
+
+      * ``result`` (``u``)
+
+        The choice that the user made regarding the background
+        activity:
+
+        - ``0``: Forbid background activity by this app
+        - ``1``: Allow background activity by this app
+        - ``2``: Allow this instance of background activity
+    -->
+    <method name="NotifyBackground">
+      <arg type="o" name="handle" direction="in"/>
+      <arg type="s" name="app_id" direction="in"/>
+      <arg type="s" name="name" direction="in"/>
+      <arg type="u" name="response" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QVariantMap"/>
+      <arg type="a{sv}" name="results" direction="out"/>
+    </method>
+
+    <!--
+      EnableAutostart:
+      @app_id: App id of the application
+      @enable: TRUE to enable autostart, FALSE to disable it
+      @commandline: The commandline to use in the autostart file
+      @flags: Flags influencing the details of the autostarting
+      @result: TRUE if autostart was enabled, FALSE otherwise
+
+      This is deprecated! New versions of xdg-desktop-portal will not
+      call this method.
+
+      Enables or disables autostart for an application.
+
+      The following flags are understood:
+
+      - ``1``: Use D-Bus activation
+    -->
+    <method name="EnableAutostart">
+      <arg type="s" name="app_id" direction="in"/>
+      <arg type="b" name="enable" direction="in"/>
+      <arg type="as" name="commandline" direction="in"/>
+      <arg type="u" name="flags" direction="in"/>
+      <arg type="b" name="result" direction="out"/>
+    </method>
+
+    <!--
+      RunningApplicationsChanged:
+
+      This signal gets emitted when applications change their state
+      and it is worth calling GetAppState again.
+    -->
+    <signal name="RunningApplicationsChanged">
+    </signal>
+  </interface>
+</node>

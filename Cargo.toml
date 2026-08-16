@@ -1,0 +1,37 @@
+[package]
+name = "bgapp2tray"
+version = "0.1.0"
+description = "Show tray icons for Flatpak apps using the XDG Background Portal"
+authors = ["Jin Liu <m.liu.jin@gmail.com>"]
+repository = "https://github.com/jinliu/bgapp2tray"
+license = "Apache-2.0"
+keywords = ["xdg", "sni", "tray", "systray"]
+categories = ["command-line-utilities"]
+edition = "2024"
+
+[profile.release]
+strip = true  # Automatically strip symbols from the binary.
+opt-level = "z"  # Optimize for size.
+lto = true
+codegen-units = 1
+
+[[bin]]
+name = "bgapp2tray"
+path = "src/tray/main.rs"
+
+[[bin]]
+name = "xdg-desktop-portal-bgapp"
+path = "src/portal/main.rs"
+
+[dependencies]
+libayatana-appindicator = "0.2.0"
+gtk = "0.15.0"
+zbus = { version = "5.19.0", features = ["tokio"] }
+tokio = {version = "1.53.0", features = ["full"]}
+futures-util = "0.3.34"
+tokio-scoped = "0.2.0"
+
+[dev-dependencies.cargo-husky]
+version = "1.5.0"
+default-features = true # Disable features which are enabled by default
+features = ["precommit-hook", "run-cargo-check", "run-cargo-clippy", "run-cargo-fmt"]

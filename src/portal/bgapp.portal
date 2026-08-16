@@ -1,0 +1,3 @@
+[portal]
+DBusName=org.freedesktop.impl.portal.desktop.bgapp
+Interfaces=org.freedesktop.impl.portal.Background

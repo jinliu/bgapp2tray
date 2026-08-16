@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+ SPDX-License-Identifier: LGPL-2.1-or-later
+ SPDX-FileCopyrightText: Copyright © the xdg-desktop-portal contributors
+-->
+
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <!--
+    org.freedesktop.background.Monitor:
+    @short_description: Background applications monitor
+
+    This interface is provided by the XDG Desktop Portal frontend to the host
+    system, if the portal backend provides an implementation of the Background
+    portal.
+
+    This API provides information related to running applications without an
+    active window, which can be used by host system services to provide rich
+    interfaces to manage those background applications.
+
+    This documentation describes version 1 of this interface.
+  -->
+  <interface name="org.freedesktop.background.Monitor">
+
+    <!--
+      BackgroundApps:
+
+      The list of applications that are considered to be running in
+      background. The following keys are supported:
+
+      * ``app_id`` (``s``)
+
+        App id of the application.
+
+      * ``instance`` (``s``)
+
+        The Flatpak instance of the application.
+
+      * ``message`` (``s``)
+
+        Status message reported by the application. Optional.
+    -->
+    <property name="BackgroundApps" type="aa{sv}" access="read">
+      <annotation name="org.qtproject.QtDBus.QtTypeName" value="QList&lt;QVariantMap&gt;"/>
+    </property>
+
+    <property name="version" type="u" access="read"/>
+  </interface>
+</node>
