@@ -111,7 +111,7 @@ You can click on the tray icon to bring the app back to the foreground. Right-cl
 
 The [Background Apps Monitor](#ref-background-monitor) has a pretty long delay, probably by design. More details in the [Technical Details](#technical-details) section.
 
-1. Why no icons for Native apps (e.g. GNOME Clock or Amberol installed via your distribution's package manager)?
+2. Why no icons for Native apps (e.g. GNOME Clock or Amberol installed via your distribution's package manager)?
 
 This is a known limitation of the XDG Background Portal. More details in the [Technical Details](#technical-details) section.
 
