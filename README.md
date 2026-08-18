@@ -173,6 +173,8 @@ One interesting implementation detail is that we don't create tray icons directl
 
 1. Similarly, some tray implementations (e.g., the one in [Noctalia](#ref-noctalia) which I'm using) also don't expect multiple tray icons under the same DBus name, so they only remove icons when the corresponding process exits.
 
+In theory, you should be above to run `bgapp2tray` in GNOME, along with the `appindicator` GNOME extension, to show background apps in the tray, in addition to Quick Settings. However, for some unknown reason, the `org.freedesktop.DBus.GetConnectionUnixProcessID` DBus call fails in GNOME. So this doesn't work.
+
 ## References
 
 1. <a name="ref-portal-app"></a>[XDG Background Portal API for app](https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Background.html)
