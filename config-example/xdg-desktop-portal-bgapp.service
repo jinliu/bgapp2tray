@@ -7,6 +7,6 @@ Wants=bgapp2tray.service
 [Service]
 Type=dbus
 BusName=org.freedesktop.impl.portal.desktop.bgapp
-ExecStart=xdg-desktop-portal-bgapp
+ExecStart=bash -c xdg-desktop-portal-bgapp
 Restart=on-failure
 RestartSec=5s
