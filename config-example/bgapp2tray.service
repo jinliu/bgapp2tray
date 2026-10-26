@@ -1,0 +1,11 @@
+[Unit]
+Description=BackgroundApp to Tray bridge
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=exec
+ExecStartPre=sleep 5
+ExecStart=bgapp2tray
+Restart=on-failure
+RestartSec=5s

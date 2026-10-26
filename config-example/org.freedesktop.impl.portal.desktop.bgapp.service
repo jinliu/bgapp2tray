@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.freedesktop.impl.portal.desktop.bgapp
+Exec=xdg-desktop-portal-bgapp
+SystemdService=xdg-desktop-portal-bgapp.service

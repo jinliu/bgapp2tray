@@ -26,8 +26,6 @@ You'll find the compiled binaries in the `target/release` directory:
 
 ## Installation
 
-First, copy the compiled binaries to a directory of your choice. They don't need to be in your `$PATH`, but `bgapp2tray` and `bgapp2tray-helper` need to be in the same directory.
-
 You need to set up two services:
 
 * `xdg-desktop-portal-bgapp`, an [XDG Desktop Portal backend](#ref-portal-backend-general), to enable the Background Portal for Flatpak apps.
@@ -35,11 +33,9 @@ You need to set up two services:
 
 (These two are not tightly coupled. They only talk through the [XDG Desktop Portal Background Apps Monitor](#ref-background-monitor) interface. In theory, you could replace one without affecting the other. But in most cases, you will want to run both. More details in the [Technical Details](#technical-details) section.)
 
-We'll cover both in the following sections:
+1. Copy `xdg-desktop-portal-bgapp`, `bgapp2tray`, and `bgapp2tray-helper` to a directory in your `$PATH`.
 
-### Setup `xdg-desktop-portal-bgapp`, the Portal backend
-
-1. Copy `xdg-desktop-portal` config files to your `$HOME`, for ease of modification:
+2. Copy `xdg-desktop-portal` config files to your `$HOME`, for ease of modification:
 
 ```bash
 cp -r /usr/share/xdg-desktop-portal $HOME/.local/share/
@@ -47,21 +43,27 @@ cp -r /usr/share/xdg-desktop-portal $HOME/.local/share/
 
 (For alternate locations, see [XDG Desktop Portal configuration](#ref-portals-conf).)
 
-2. Install the backend description file:
+3. Install the backend description file:
 
 ```bash
 cp config-example/bgapp.portal $HOME/.local/share/xdg-desktop-portal/portals/
 ```
 
-3. Modify the portal config file for your compositor. For example, if you are using `niri`, then you need to modify `$HOME/.local/share/xdg-desktop-portal/niri-portals.conf` to add the following line:
+4. Modify the portal config file for your compositor. For example, if you are using `niri`, then you need to modify `$HOME/.local/share/xdg-desktop-portal/niri-portals.conf` to add the following line:
 
 ```txt
 org.freedesktop.impl.portal.Background=bgapp;
 ```
 
-4. Arrange for `xdg-desktop-portal-bgapp` to autostart. This varies depending on your compositor.
+5. Arrange for `xdg-desktop-portal-bgapp` and `bgapp2tray` to autostart:
+```bash
+mkdir -p $HOME/.local/share/dbus-1/services
+cp config-example/org.freedesktop.impl.portal.desktop.bgapp.service $HOME/.local/share/dbus-1/services/
+mkdir -p $HOME/.config/systemd/user
+cp config-example/xdg-desktop-portal-bgapp.service config-example/bgapp2tray.service $HOME/.config/systemd/user/
+```
 
-#### Configuration
+### Configuration
 
 `xdg-desktop-portal-bgapp` uses the Wayland [Foreign Toplevel List v1](#ref-foreign-toplevel-list) protocol to get the list of all app windows. It's supported by Cosmic, Hyprland, Niri, and all wlroots-based compositors (e.g., Sway). (GNOME and KDE Plasma don't support the protocol. But their own portal backends use private protocols to talk with their compositors. So you don't need this project in this case.)
 
@@ -80,12 +82,6 @@ sh -c "<your_command_here>"
 ```
 
 You can also modify `update_interval_ms=1000` to change how frequently the command is run.
-
-### Setup `bgapp2tray`, the tray icon manager
-
-Make sure that `bgapp2tray` and `bgapp2tray-helper` are in the same directory. Then arrange for `bgapp2tray` to autostart. This varies depending on your compositor.
-
-#### Configuration
 
 `bgapp2tray` uses a configuration file located at `$HOME/.config/bgapp2tray.toml`. You can copy the example configuration file and edit it according to your needs:
 
